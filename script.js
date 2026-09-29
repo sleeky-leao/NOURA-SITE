@@ -4,7 +4,7 @@ const products = document.querySelectorAll(".product");
 
 searchInput.addEventListener("input", inputTyped);
 
-//this function checks whether the value it is typed in the input matches the product the display only the product typed..else it doesnt display if the value doesnt match.
+//this function checks whether the value  typed in the input matches the product, then display only the product typed..else it doesnt display if the value doesn't match.
 function inputTyped(){
     const searchValue = searchInput.value.toLowerCase();
 
