@@ -21,7 +21,7 @@ function inputTyped(){
 }
 
 
-
+//this code opens and close the cart panel
 const cartBtn = document.querySelector("#cart-btn");
 const cartPanel = document.querySelector("#cart-panel");
 const closeCart = document.querySelector("#close-cart");
@@ -33,6 +33,8 @@ cartBtn.addEventListener("click", function () {
 closeCart.addEventListener("click", function () {
     cartPanel.classList.remove("active");
 });
+
+
 
 let cart = JSON.parse(localStorage.getItem("nouraCart")) || [];
 
