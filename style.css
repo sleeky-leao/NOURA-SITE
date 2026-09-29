@@ -558,12 +558,13 @@
     /* Hide desktop buttons on mobile */
 
     .shop-btn {
-        display: none;
+        padding: 5px;
+        margin-right: 5px;
     }
 
-    .cart-btn {
-        display: none;
-    }
+    /*.cart-btn {
+        display:;
+    }*/
 
 
     /* HERO */
