@@ -1,23 +1,24 @@
+//search input code....when the product is typed in the search it filters the products searched for.
 const searchInput = document.querySelector("#search-input");
 const products = document.querySelectorAll(".product");
 
-searchInput.addEventListener("input", function () {
+searchInput.addEventListener("input", inputTyped);
 
+//this function checks whether the value it is typed in the input matches the product the display only the product typed..else it doesnt display if the value doesnt match.
+function inputTyped(){
     const searchValue = searchInput.value.toLowerCase();
 
-    products.forEach(function (product) {
-
+    products.forEach(function(product){
         const productName = product.dataset.name.toLowerCase();
 
-        if (productName.includes(searchValue)) {
+        if(productName.includes(searchValue)){
             product.style.display = "";
-        } else {
-            product.style.display = "none";
+        }else{
+            product.style.display = "none"
         }
+    })
 
-    });
-
-});
+}
 
 
 
