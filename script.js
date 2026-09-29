@@ -21,7 +21,7 @@ function inputTyped(){
 }
 
 
-//this code opens and close the cart panel
+//this code adds a class "active" to the cartPanel which is a div ..which controls the display of the opening and closing of  cartPanel when clicked as set in the css.
 const cartBtn = document.querySelector("#cart-btn");
 const cartPanel = document.querySelector("#cart-panel");
 const closeCart = document.querySelector("#close-cart");
