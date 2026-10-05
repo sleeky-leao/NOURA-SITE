@@ -35,23 +35,34 @@ closeCart.addEventListener("click", function () {
 });
 
 
-
+// we get the saved cart from localStorage.
+//if there is no saved cart, start with an empty array
 let cart = JSON.parse(localStorage.getItem("nouraCart")) || [];
 
+//select all "Add to Cart buttons"
 const addCartButtons = document.querySelectorAll(".add-cart");
+
+//loop thru each Add to Cart button
 addCartButtons.forEach(function (button) {
 
+    //listen for a click on the button.
     button.addEventListener("click", function () {
 
+        //find the product that contains the clicked button
         const product = button.closest(".product");
 
+        //get the product name from the data-name attribute
         const name = product.dataset.name;
+
+        //get the product price and convert it from a string to a number
         const price = Number(product.dataset.price);
 
+        //check if the product already exist in the cart
         const existingProduct = cart.find(function (item) {
             return item.name === name;
         });
 
+        //if the product exist, increase its quantity; otherwise, add it as a new product
         if (existingProduct) {
 
             existingProduct.quantity++;
@@ -65,23 +76,39 @@ addCartButtons.forEach(function (button) {
             });
 
         }
+        //save the updated cart to localStorage
         saveCart()
 
+        //display the updated cart on the page
         displayCart()
+
+        //update the number shown on the cart button
         updateCartCount()
 
     });
 
 });
 
+//saves the cart to the localStorage
+function saveCart() {
+    localStorage.setItem("nouraCart", JSON.stringify(cart));
+}
+
+
+//this function takes the products inside the cart array and display them on the webpage
+
 function displayCart() {
 
+    //find the HTML element where cart items will be displayed.
     const cartItems = document.querySelector("#cart-items");
 
+    //clear the cart display before showing the updated cart
     cartItems.innerHTML = "";
 
+    //check if the cart is empty
     if (cart.length === 0) {
 
+        //display an empty-cart message
     cartItems.innerHTML = `
         <div class="empty-cart">
             <p>🛒</p>
@@ -90,17 +117,23 @@ function displayCart() {
         </div>
     `;
 
+    //update the total price to 0
     updateTotal();
 
+    //stop the function here because there are no product to display
     return;
 }
 
+//loop thru every product in the cart
     cart.forEach(function (item, index) {
 
+        //create a new <div> element for the cart item
         const cartItem = document.createElement("div");
 
+        //give the new div the "cart-item" class
         cartItem.classList.add("cart-item");
 
+        //add the product information and buttons inside the div
         cartItem.innerHTML = `
             <div>
                 <h3>${item.name}</h3>
@@ -135,13 +168,19 @@ function displayCart() {
             </button>
         `;
 
+        //Add the newly created cart to the webpage
         cartItems.appendChild(cartItem);
 
     });
 
+    //calculate and display the updated cart total
     updateTotal();
 }
-document.querySelector("#cart-items").addEventListener("click", function (event) {
+
+
+const cartItem = document.querySelector("#cart-items");
+
+cartItem.addEventListener("click", function (event) {
 
     const index = event.target.dataset.index;
 
@@ -240,9 +279,7 @@ placeOrder.addEventListener("click", function () {
     checkoutForm.classList.remove("active");
 
 });
-function saveCart() {
-    localStorage.setItem("nouraCart", JSON.stringify(cart));
-}
+
 displayCart()
 updateCartCount()
 
