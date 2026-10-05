@@ -298,6 +298,11 @@ checkoutBtn.addEventListener("click", function () {
     //show the checkout form
     checkoutForm.classList.add("active");
 
+    //scroll directly to the checkout form
+    checkoutForm.scrollIntoView({
+        behavior: "smooth"
+    });
+
 });
 
 //select the place order button
