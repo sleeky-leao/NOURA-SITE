@@ -89,10 +89,14 @@ addCartButtons.forEach(function (button) {
 
 });
 
+
+
 //saves the cart to the localStorage
 function saveCart() {
     localStorage.setItem("nouraCart", JSON.stringify(cart));
 }
+
+
 
 
 //this function takes the products inside the cart array and display them on the webpage
@@ -178,115 +182,176 @@ function displayCart() {
 }
 
 
+
+//select the container that holds all cart items.
 const cartItem = document.querySelector("#cart-items");
 
+//listen for clicks anywhere the cart
 cartItem.addEventListener("click", function (event) {
 
+    //get the index of the product whose button was clicked 
     const index = event.target.dataset.index;
 
+    //if the clicked button has the "plus" class..
     if (event.target.classList.contains("plus")) {
 
+        //increase that product's quantity by 1
         cart[index].quantity++;
 
     }
 
+    //if the clicked button has the "minus" class..
     if (event.target.classList.contains("minus")) {
 
+        //decrease that product's quantity by 1
         cart[index].quantity--;
 
+        //if the quantity reaches 0...
         if (cart[index].quantity === 0) {
+
+            //remove that product from the cart
             cart.splice(index, 1);
         }
 
     }
 
+    //if the clicked button has the "removed-cart" class...
     if (event.target.classList.contains("remove-cart")) {
 
+        //remove that product from the cart
         cart.splice(index, 1);
 
     }
+    //save the update cart to localStorage
     saveCart()
 
+    //redisplay the updated cart
     displayCart();
+    //update the cart count.
     updateCartCount()
 
 });
 
+
+//calculate the total cost in the cart and display it on the page
 function updateTotal() {
 
+    //find the HTML element where the total price will be displayed.
     const cartTotal = document.querySelector("#cart-total");
 
+    //start the total at 0
     let total = 0;
 
+    //loop through every product in the cart.
     cart.forEach(function (item) {
 
+        //calculate the item's price and add itt to the overall total
         total += item.price * item.quantity;
 
     });
 
+    //display the total on the webpage and format the number with commas
     cartTotal.textContent = total.toLocaleString();
 }
 
+
+//count the total number of products in the cart and display that number next to the cart icon/button
 function updateCartCount() {
 
+    //find the html element where the cart count is displayed
     const cartCount = document.querySelector("#cart-count");
 
+    //start the count at 0
     let count = 0;
 
+    //loop thru every product in the cart.
     cart.forEach(function (item) {
 
+        //add each product's quantity to the total count.
         count += item.quantity;
 
     });
 
+    //display the final count on the webpage
     cartCount.textContent = count;
 
 }
 
+//find the checkout button.
 const checkoutBtn = document.querySelector("#checkout-btn");
+//find the checkout form
 const checkoutForm = document.querySelector("#checkout-form");
 
+//listen for a click on the checkout button
 checkoutBtn.addEventListener("click", function () {
 
+    //check if the cart is empty
     if (cart.length === 0) {
+
+        //Tell the user to add a product first.
         alert("Your cart is empty. Add a product first.");
+
+        //stop the function
         return;
     }
 
+    //show the checkout form
     checkoutForm.classList.add("active");
 
 });
+
+//select the place order button
 const placeOrder = document.querySelector("#place-order");
 
+//listen for a click on the place order button
 placeOrder.addEventListener("click", function () {
 
+    //get the customer's name,phone, and location from the inputs.
     const name = document.querySelector("#customer-name").value;
     const phone = document.querySelector("#customer-phone").value;
     const location = document.querySelector("#customer-location").value;
 
+    //check if any of the fields are empty
     if (!name || !phone || !location) {
+        //tell the user to fill in all the fields.
         alert("Please fill in all the fields.");
+
+        //stop the function
         return;
     }
 
+    //show a confirmation message
     alert(`Thank you ${name}! Your order has been placed.`);
 
+    //empty the cart after placing the order
     cart = [];
 
+    //update the cart display
     displayCart();
+
+    //update the cart display
     updateCartCount();
 
+    //hide the checkout form
     checkoutForm.classList.remove("active");
 
 });
 
+//display the cart when the page loads
 displayCart()
+//update the  cart count when the page loads
 updateCartCount()
 
+
+//select the hamburger menu button.
 const hamburger = document.querySelector("#hamburger");
+//select the navigation links
 const navLinks = document.querySelector(".nav-links");
 
+//listen for a click on the hamburger button
 hamburger.addEventListener("click", () => {
+    //toggle the active class on the hamburger
     hamburger.classList.toggle("active");
+    //toggle the active class on the navigation menu.
     navLinks.classList.toggle("active")
 });
