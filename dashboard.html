@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOURA | Admin Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+    <header class="dashboard-header">
+        <h1>🍀 NOURA</h1>
+        <div>
+            <span>Admin Dashboard</span>
+            <button id="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+
+        <h2>Dashboard Overview</h2>
+        <p>Welcome to your NOURA store management panel.</p>
+
+        <!-- Statistics -->
+        <section class="stats-container">
+
+            <div class="stat-card">
+                <h3>Total Orders</h3>
+                <p id="total-orders">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Pending Orders</h3>
+                <p id="pending-orders">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Completed Orders</h3>
+                <p id="completed-orders">0</p>
+            </div>
+
+        </section>
+
+        <!-- Orders -->
+        <section class="orders-section">
+
+            <h2>Customer Orders</h2>
+            <p id="status-message" role="status"></p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Phone</th>
+                            <th>Location</th>
+                            <th>Products</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="orders-table">
+                        <tr>
+                            <td colspan="8">Loading orders...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <h3>Delete Order?</h3>
+            <p>Are you sure you want to permanently delete this delivered order?</p>
+    
+            <div class="modal-actions">
+                <button id="cancel-delete">Cancel</button>
+                <button id="confirm-delete">Yes, Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

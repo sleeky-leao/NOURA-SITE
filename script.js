@@ -2,6 +2,14 @@
 const searchInput = document.querySelector("#search-input");
 const products = document.querySelectorAll(".product");
 
+const successModal = document.querySelector("#order-success-modal");
+
+const closeSuccessModal = document.querySelector("#close-success-modal");
+
+closeSuccessModal.addEventListener("click", function () {
+    successModal.style.display = "none";
+});
+
 searchInput.addEventListener("input", inputTyped);
 
 //this function checks whether the value  typed in the input matches the product, then display only the product typed..else it doesnt display if the value doesn't match.
@@ -283,22 +291,24 @@ const checkoutBtn = document.querySelector("#checkout-btn");
 const checkoutForm = document.querySelector("#checkout-form");
 
 //listen for a click on the checkout button
+//listen for a click on the checkout button
 checkoutBtn.addEventListener("click", function () {
 
     //check if the cart is empty
     if (cart.length === 0) {
 
-        //Tell the user to add a product first.
         alert("Your cart is empty. Add a product first.");
 
-        //stop the function
         return;
     }
+
+    //close the cart
+    cartPanel.classList.remove("active");
 
     //show the checkout form
     checkoutForm.classList.add("active");
 
-    //scroll directly to the checkout form
+    //scroll to the checkout form
     checkoutForm.scrollIntoView({
         behavior: "smooth"
     });
@@ -309,36 +319,65 @@ checkoutBtn.addEventListener("click", function () {
 const placeOrder = document.querySelector("#place-order");
 
 //listen for a click on the place order button
-placeOrder.addEventListener("click", function () {
+placeOrder.addEventListener("click", async function () {
 
-    //get the customer's name,phone, and location from the inputs.
-    const name = document.querySelector("#customer-name").value;
-    const phone = document.querySelector("#customer-phone").value;
-    const location = document.querySelector("#customer-location").value;
+    const name = document.querySelector("#customer-name").value.trim();
+    const phone = document.querySelector("#customer-phone").value.trim();
+    const location = document.querySelector("#customer-location").value.trim();
 
-    //check if any of the fields are empty
     if (!name || !phone || !location) {
-        //tell the user to fill in all the fields.
         alert("Please fill in all the fields.");
-
-        //stop the function
         return;
     }
 
-    //show a confirmation message
-    alert(`Thank you ${name}! Your order has been placed.`);
+    try {
 
-    //empty the cart after placing the order
-    cart = [];
+        const response = await fetch("http://localhost:5000/api/orders", {
 
-    //update the cart display
-    displayCart();
+            method: "POST",
 
-    //update the cart display
-    updateCartCount();
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-    //hide the checkout form
-    checkoutForm.classList.remove("active");
+            body: JSON.stringify({
+                customerName: name,
+                customerPhone: phone,
+                customerLocation: location,
+                items: cart
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message);
+        }
+
+// Clear the cart
+cart = [];
+
+saveCart();
+displayCart();
+updateCartCount();
+
+// Close the checkout form
+checkoutForm.classList.remove("active");
+
+// Close the cart panel
+cartPanel.classList.remove("active");
+
+// Show the NOURA success popup
+successModal.style.display = "flex";
+
+    } catch (error) {
+
+        console.error("Order submission failed:", error);
+
+        alert("We couldn't place your order. Please try again.");
+
+    }
 
 });
 
