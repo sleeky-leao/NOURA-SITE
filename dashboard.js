@@ -23,7 +23,7 @@ let selectedOrderId = null;
 async function fetchOrders() {
 
     try {
-        const response = await fetch("http://localhost:5000/api/admin/orders", {
+        const response = await fetch("https://noura-backend-7e1g.onrender.com/api/admin/orders", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -136,7 +136,7 @@ ordersTable.addEventListener("change", async function (event) {
 
     try {
         const response = await fetch(
-            `http://localhost:5000/api/admin/orders/${orderId}/status`,
+            `https://noura-backend-7e1g.onrender.com/api/admin/orders/${orderId}/status`,
             {
                 method: "PATCH",
                 headers: {
@@ -194,7 +194,7 @@ confirmDelete.addEventListener("click", async function () {
 
     try {
         const response = await fetch(
-            `http://localhost:5000/api/admin/orders/${selectedOrderId}`,
+            `https://noura-backend-7e1g.onrender.com/api/admin/orders/${selectedOrderId}`,
             {
                 method: "DELETE",
                 headers: {
